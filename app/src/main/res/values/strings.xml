@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">aepp-showcase-android</string>
+    <string name="ae">(AE)</string>
+    <string name="balanceAlice">Balance Alice:</string>
+    <string name="balanceBob">Balance Bob:</string>
+    <string name="button_sendToBob">Alice to Bob</string>
+    <string name="button_sendToAlice">Bob to Alice</string>
+</resources>
