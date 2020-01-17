@@ -9,6 +9,9 @@
 </h1>
 
 This is a simple showcase that demonstrates how the [aepp-sdk-java](https://github.com/kryptokrauts/aepp-sdk-java) can be used in an android application.
+<p align="center">
+  <img alt="aepp-showcase-android" src="device-picture.png" height="200">
+</p>
 
 ## Join the discussion
 There are some limitations and general information you need to know when developing an android application using the SDK. You can help us improving the current state and join the discussion here:
