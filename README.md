@@ -19,10 +19,7 @@ There are some limitations and general information you need to know when develop
 - https://forum.aeternity.com/t/android-sdk-for-aeternity/4367
 
 ## Support us
-Do you like our work? We would be happy about a small donation:
-- æternity:
-  - ak_5z1fmzTKR1GA1P7qiLDCC1s3V7AK2RRpNbXqUhfHQbUeg7mmV
-- via [ArkaneNetwork](https://arkane.network/):
-  - kryptokrauts@protonmail.com
 
-Don't forget to [download Brave](https://brave.com/kry019) and send us tips from rewards you earned by watching advertisements :-)
+If you like this project we would appreciate your support. You can find multiple ways to support us here:
+
+- https://kryptokrauts.com/support/
