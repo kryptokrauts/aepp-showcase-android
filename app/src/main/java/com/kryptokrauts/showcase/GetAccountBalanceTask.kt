@@ -2,7 +2,6 @@ package com.kryptokrauts.showcase
 
 import android.content.Context
 import android.os.AsyncTask
-import com.kryptokrauts.aeternity.sdk.service.aeternity.AeternityServiceConfiguration
 import com.kryptokrauts.aeternity.sdk.service.aeternity.AeternityServiceFactory
 import java.math.BigInteger
 import java.util.*
@@ -10,17 +9,7 @@ import java.util.*
 class GetAccountBalanceTask: AsyncTask<String, BigInteger, Void> {
 
     private val listener : AsyncBalanceListener
-
-    // normally we wouldn't have to explicitely set the base Urls but in v2.1.0 of the sdk they are wrong
-    // see https://github.com/kryptokrauts/aepp-sdk-java/issues/95
-    // will be fixed in the upcoming release
-    private val aeternityService = AeternityServiceFactory().getService(
-        AeternityServiceConfiguration
-            .configure()
-            .baseUrl("https://sdk-testnet.aepps.com")
-            .aeternalBaseUrl("https://testnet.aeternal.io")
-            .compile()
-    )
+    private val aeternityService = AeternityServiceFactory().service
 
     constructor(context: Context) {
         listener = context as AsyncBalanceListener
