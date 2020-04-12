@@ -6,15 +6,15 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.kryptokrauts.aeternity.sdk.domain.secret.impl.BaseKeyPair
 import com.kryptokrauts.aeternity.sdk.domain.secret.impl.MnemonicKeyPair
-import com.kryptokrauts.aeternity.sdk.service.aeternity.AeternityServiceConfiguration
 import com.kryptokrauts.aeternity.sdk.service.aeternity.AeternityServiceFactory
 import com.kryptokrauts.aeternity.sdk.service.aeternity.impl.AeternityService
 import com.kryptokrauts.aeternity.sdk.service.keypair.KeyPairService
 import com.kryptokrauts.aeternity.sdk.service.keypair.KeyPairServiceFactory
 import com.kryptokrauts.aeternity.sdk.service.transaction.type.model.SpendTransactionModel
+import com.kryptokrauts.aeternity.sdk.service.unit.UnitConversionService
+import com.kryptokrauts.aeternity.sdk.service.unit.impl.DefaultUnitConversionServiceImpl
 import com.kryptokrauts.aeternity.sdk.util.EncodingUtils
 import com.kryptokrauts.aeternity.sdk.util.UnitConversionUtil
-import org.bitcoinj.crypto.ChildNumber
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.*
@@ -23,8 +23,9 @@ class MainActivity : AppCompatActivity(), AsyncBalanceListener {
 
     lateinit var aeternityService: AeternityService
     lateinit var keyPairService: KeyPairService
+    lateinit var unitConversionService: UnitConversionService
 
-    lateinit var mnemonicKeyPair: MnemonicKeyPair
+    lateinit var mnemonicMaster: MnemonicKeyPair
     lateinit var keyPairAlice: BaseKeyPair
     lateinit var keyPairBob: BaseKeyPair
 
@@ -39,21 +40,14 @@ class MainActivity : AppCompatActivity(), AsyncBalanceListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // normally we wouldn't have to explicitely set the base Urls but in v2.1.0 of the sdk they are wrong
-        // see https://github.com/kryptokrauts/aepp-sdk-java/issues/95
-        // will be fixed in the upcoming release
-        aeternityService = AeternityServiceFactory().getService(
-            AeternityServiceConfiguration
-                .configure()
-                .baseUrl("https://sdk-testnet.aepps.com")
-                .aeternalBaseUrl("https://testnet.aeternal.io")
-                .compile()
-        )
-
+        // the default configuration points to the testnet
+        // to change that you need to provide a custom configuration when initializing the aeternityService
+        aeternityService = AeternityServiceFactory().service
         keyPairService = KeyPairServiceFactory().service
-        mnemonicKeyPair = keyPairService.recoverMasterMnemonicKeyPair(listOf("acquire", "useful", "napkin", "ranch", "witness", "scare", "lunch", "smart", "sibling", "situate", "potato", "inspire"), null)
-        keyPairAlice = EncodingUtils.createBaseKeyPair(keyPairService.generateDerivedKey(mnemonicKeyPair, true, ChildNumber.ZERO_HARDENED, ChildNumber(0, true)))
-        keyPairBob = EncodingUtils.createBaseKeyPair(keyPairService.generateDerivedKey(mnemonicKeyPair, true, ChildNumber.ZERO_HARDENED, ChildNumber(1, true)))
+        unitConversionService = DefaultUnitConversionServiceImpl()
+        mnemonicMaster = keyPairService.recoverMasterMnemonicKeyPair(listOf("acquire", "useful", "napkin", "ranch", "witness", "scare", "lunch", "smart", "sibling", "situate", "potato", "inspire"), null)
+        keyPairAlice = EncodingUtils.createBaseKeyPair(keyPairService.generateDerivedKey(mnemonicMaster, true))
+        keyPairBob = EncodingUtils.createBaseKeyPair(keyPairService.generateDerivedKey(mnemonicMaster, true))
 
         println("PK Alice: ${keyPairAlice.publicKey}")
         println("PK Bob: ${keyPairBob.publicKey}")
@@ -67,11 +61,11 @@ class MainActivity : AppCompatActivity(), AsyncBalanceListener {
     }
 
     fun aliceToBob(view: View) {
-        sendAE(keyPairAlice, keyPairBob, UnitConversionUtil.toAettos("0.1", UnitConversionUtil.Unit.AE).toBigInteger())
+        sendAE(keyPairAlice, keyPairBob, unitConversionService.toSmallestUnit("0.1"))
     }
 
     fun bobToAlice(view: View) {
-        sendAE(keyPairBob, keyPairAlice, UnitConversionUtil.toAettos("0.1", UnitConversionUtil.Unit.AE).toBigInteger())
+        sendAE(keyPairBob, keyPairAlice, unitConversionService.toSmallestUnit("0.1"))
     }
 
     private fun sendAE(from: BaseKeyPair, to: BaseKeyPair, amount: BigInteger) {

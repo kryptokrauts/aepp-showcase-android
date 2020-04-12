@@ -9,6 +9,8 @@ import java.util.*
 class GetAccountBalanceTask: AsyncTask<String, BigInteger, Void> {
 
     private val listener : AsyncBalanceListener
+    // the default configuration points to the testnet
+    // to change that you need to provide a custom configuration when initializing the aeternityService
     private val aeternityService = AeternityServiceFactory().service
 
     constructor(context: Context) {
@@ -21,7 +23,8 @@ class GetAccountBalanceTask: AsyncTask<String, BigInteger, Void> {
             var balanceList: MutableList<BigInteger> = mutableListOf()
             params.forEach { param -> run{
                 var acc = aeternityService.accounts.blockingGetAccount(Optional.of(param!!))
-                balanceList.add(acc.balance)
+                val balance = acc.balance ?: BigInteger.ZERO
+                balanceList.add(balance)
             } }
             publishProgress(*balanceList.toTypedArray())
             println("wait 5 seconds ...")
