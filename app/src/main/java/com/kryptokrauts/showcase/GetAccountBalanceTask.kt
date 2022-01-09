@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.AsyncTask
 import com.kryptokrauts.aeternity.sdk.service.aeternity.AeternityServiceFactory
 import java.math.BigInteger
-import java.util.*
 
 class GetAccountBalanceTask: AsyncTask<String, BigInteger, Void> {
 
@@ -22,7 +21,7 @@ class GetAccountBalanceTask: AsyncTask<String, BigInteger, Void> {
             println("update balances")
             var balanceList: MutableList<BigInteger> = mutableListOf()
             params.forEach { param -> run{
-                var acc = aeternityService.accounts.blockingGetAccount(Optional.of(param!!))
+                var acc = aeternityService.accounts.blockingGetAccount(param)
                 val balance = acc.balance ?: BigInteger.ZERO
                 balanceList.add(balance)
             } }
