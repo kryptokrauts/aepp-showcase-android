@@ -1,84 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".MainActivity">
+        android:layout_height="match_parent">
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <Button
+            android:id="@+id/buttonAliceToBob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="14dp"
+            android:text="@string/button_sendToBob"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+        <TextView
+            android:id="@+id/labelBalanceAlice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:text="@string/balanceAlice"
+            app:layout_constraintBottom_toBottomOf="@id/buttonAliceToBob"
+            app:layout_constraintStart_toEndOf="@id/buttonAliceToBob"
+            app:layout_constraintTop_toTopOf="@id/buttonAliceToBob" />
 
-                <Button
-                    android:id="@+id/buttonAliceToBob"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="14dp"
-                    android:onClick="aliceToBob"
-                    android:text="@string/button_sendToBob" />
+        <TextView
+            android:id="@+id/valueBalanceAlice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:text="0.0 AE"
+            app:layout_constraintBottom_toBottomOf="@id/labelBalanceAlice"
+            app:layout_constraintStart_toEndOf="@id/labelBalanceAlice"
+            app:layout_constraintTop_toTopOf="@id/labelBalanceAlice" />
 
-                <TextView
-                    android:id="@+id/labelBalanceAlice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="14dp"
-                    android:text="@string/balanceAlice" />
+        <Button
+            android:id="@+id/buttonBobToAlice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="14dp"
+            android:text="@string/button_sendToAlice"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonAliceToBob" />
 
-                <TextView
-                    android:id="@+id/valueBalanceAlice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="14dp"
-                    android:text="0.0 AE" />
+        <TextView
+            android:id="@+id/labelBalanceBob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:text="@string/balanceBob"
+            app:layout_constraintBottom_toBottomOf="@id/buttonBobToAlice"
+            app:layout_constraintStart_toEndOf="@id/buttonBobToAlice"
+            app:layout_constraintTop_toTopOf="@id/buttonBobToAlice" />
 
-            </TableRow>
+        <TextView
+            android:id="@+id/valueBalanceBob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:text="0.0 AE"
+            app:layout_constraintBottom_toBottomOf="@id/buttonBobToAlice"
+            app:layout_constraintStart_toEndOf="@id/labelBalanceBob"
+            app:layout_constraintTop_toTopOf="@id/buttonBobToAlice" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-
-                <Button
-                    android:id="@+id/buttonBobToAlice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="14dp"
-                    android:onClick="bobToAlice"
-                    android:text="@string/button_sendToAlice" />
-
-                <TextView
-                    android:id="@+id/labelBalanceBob"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="14dp"
-                    android:text="@string/balanceBob" />
-
-                <TextView
-                    android:id="@+id/valueBalanceBob"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="14dp"
-                    android:text="0.0 AE" />
-
-            </TableRow>
-
-        </TableLayout>
+        <ProgressBar
+            android:id="@+id/progress_circular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</layout>
